@@ -11,7 +11,7 @@ import busio
 import storage
 import adafruit_sdcard
 import adafruit_gps
-import adafruit_pct2075
+import adafruit_sht4x
 
 ## Set variables
 
@@ -33,9 +33,8 @@ storage.mount(vfs, "/sd")
 
 # Use the filesystem as normal! Our files are under `/sd`.
 
-## Setup the temperature sensor
-i2c = board.I2C()
-pct = adafruit_pct2075.PCT2075(i2c)
+## Setup the SHT41/45 temperature and humidity sensor
+sht = adafruit_sht4x.SHT4x(board.I2C())
 
 ## Setup the GPS
 
@@ -81,9 +80,10 @@ while True:
             gps.timestamp_utc.tm_sec
         )
         thisspot = "{:.6f},{:.6f}".format(gps.latitude, gps.longitude)
-        thistemp = "{:.2f}".format(pct.temperature)
+        thistemp = "{:.2f}".format(sht.temperature)
+        thishumi = "{:.2f}".format(sht.relative_humidity) 
         # Combine our measurements into one line.
-        line = "{},{},{}\r\n".format(thistime, thisspot, thistemp)
+        line = "{},{},{}\r\n".format(thistime, thisspot, thistemp, thishumi)
         # Save the line to the log file.
         with open(LOG_FILE, LOG_MODE) as f:
             print(line)

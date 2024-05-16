@@ -26,9 +26,14 @@ We would love your help on this project! Check out the [project board](https://g
 | Adafruit Ultimate GPS Breakout | [$29.95](https://www.adafruit.com/product/5440) |
 | SMA to uFL/u.FL/IPX/IPEX RF Adapter Cable | [$3.95](https://www.adafruit.com/product/851) |
 | GPS Antenna - External Active Antenna | [$19.95](https://www.adafruit.com/product/960) |
-| Adafruit PCT2075 Temperature Sensor - STEMMA QT / Qwiic | [$4.95](https://www.adafruit.com/product/4369) |
+| Adafruit Sensirion SHT41 Temperature & Humidity Sensor - STEMMA QT / Qwiic | [$5.95](https://www.adafruit.com/product/5776) |
 | STEMMA QT / Qwiic JST SH 4-Pin Cable - 300mm | [$1.25](https://www.adafruit.com/product/5384) |
 | SD/MicroSD Memory Card - 16GB Class 10 | [$19.95](https://www.adafruit.com/product/2693) |
+
+**Options:**
+- For an additional $7 you can replace the SHT41 Sensor with the [SHT45](https://www.adafruit.com/product/5665). The same code will work for both.
+    - The SHT41 has an ±1.8% typical relative humidity accuracy from 25 to 75% and ±0.2 °C typical accuracy from 0 to 75 °C.
+    - The SHT45 has an ±1.0% typical relative humidity accuracy from 25 to 75% and ±0.1°C typical accuracy from 0 to 75 °C.
 
 **Additional components:**  
 _(These are items that are either going to be phased out as the project matures, or that you may already have.)_
@@ -64,15 +69,14 @@ _(These are items that are either going to be phased out as the project matures,
 - Connect the Metro board to your computer via the USB-C port.
 - [Install the Mu editor](https://learn.adafruit.com/welcome-to-circuitpython/installing-mu-editor) on your computer. When downloading the latest stable version [for the Metro RP2040](https://circuitpython.org/board/adafruit_metro_rp2040/) note the version number. It is `8.2.9` at the time of writing this.
 - [Install CircuitPython](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython) on the Metro board. Follow the instruction sections for RP2040 boards.
-- [Download](https://github.com/adafruit/Adafruit_CircuitPython_PCT2075/releases) the latest CircuitPython module for the temperature sensor. Match the version with the version of CircuitPython you installed. We looked for `8.x` in the filename.
-- Download the CircuitPython [library bundle](https://circuitpython.org/libraries) for your CircuitPython version. Again, we looked for the `8.x` bundle.
-- Unzip the module and library downloads, and from the `/lib/` folders copy the following files into the `/lib/` folder on your Metro board's drive:
-  - adafruit_pct2075.mpy
-  - adafruit_gps.mpy
+- Download the CircuitPython [library bundle](https://circuitpython.org/libraries) for your CircuitPython version. Match the version with the version of CircuitPython you installed. We looked for `8.x` in the filename.
+- Unzip the library download, and from the `/lib/` folders copy the following files into the `/lib/` folder on your Metro board's drive:
   - adafruit_bus_device (this one is a folder)
-  - adafruit_sdcard.mpy
+  - adafruit_gps.mpy
   - adafruit_register (this one is also a folder)
-- Copy the `code.py` file to the home directory of the Metro board.
+  - adafruit_sdcard.mpy
+  - adafruit_sht4x.mpy (for the temperature and humidity sensor)
+- Copy the `code.py` file from this repository to the home directory of the Metro board.
 
 #### Running things
 
