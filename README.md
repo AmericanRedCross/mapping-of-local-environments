@@ -100,9 +100,5 @@ Right now, this is just bare bones! If the device is powered on and can get a GP
 - [Adafruit Metro RP2040](https://learn.adafruit.com/adafruit-metro-rp2040) by Kattni Rembor 
 - [Adafruit Ultimate GPS](https://learn.adafruit.com/adafruit-ultimate-gps) by lady ada 
 - [Adafruit GPS library](https://docs.circuitpython.org/projects/gps/en/latest/index.html) API technical documentation
-- [Adafruit PCT2075 Temperature Sensor](https://learn.adafruit.com/adafruit-pct2075-temperature-sensor/) by Abigail Torres
-- [PCT2075 Digital Temperature Sensor library](https://docs.circuitpython.org/projects/pct2075/) API technical documentation
 - [Adafruit Sensirion SHT40, SHT41 & SHT45 Temperature & Humidity Sensors](https://learn.adafruit.com/adafruit-sht40-temperature-humidity-sensor) By Kattni Rembor 
 - [PM2.5 Air Quality Sensor](https://learn.adafruit.com/pm25-air-quality-sensor) by lady ada
-
-
