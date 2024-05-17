@@ -29,6 +29,7 @@ We would love your help on this project! Check out the [project board](https://g
 | Adafruit Sensirion SHT41 Temperature & Humidity Sensor - STEMMA QT / Qwiic | [$5.95](https://www.adafruit.com/product/5776) |
 | STEMMA QT / Qwiic JST SH 4-Pin Cable - 300mm | [$1.25](https://www.adafruit.com/product/5384) |
 | SD/MicroSD Memory Card - 16GB Class 10 | [$19.95](https://www.adafruit.com/product/2693) |
+| PM2.5 Air Quality Sensor and Breadboard Adapter Kit - PMS5003 | [$39.95](https://www.adafruit.com/product/3686) |
 
 **Options:**
 - For an additional $7 you can replace the SHT41 Sensor with the [SHT45](https://www.adafruit.com/product/5665). The same code will work for both.
@@ -53,11 +54,17 @@ _(These are items that are either going to be phased out as the project matures,
 
 - Connect the PCT2075 Temperature Sensor to the Metro board using the STEMMA QT cable. The port on the Metro board is labeled (and there's only one it fits in). With the sensor oriented so that you can read the text printed on it, plug the cable into the left side port.
 - The GPS breakout needs the headers cut to length and soldered on. If you're new to soldering, consider looking through the [Adafruit Guide To Excellent Soldering](https://learn.adafruit.com/adafruit-guide-excellent-soldering) by Bill Earl.
+- Use a jumper wire to connect the `5V` on the Metro board to the `+` power rail of the breadboard.
+- Use a jumper wire to connect the `Gnd` on the Metro board to the `-` power rail of the breadboard.
 - Use the breadboard and jumper wires to connect the GPS breakout and Metro board:
-  - `GND` on the breakout <--> `Gnd` on the Metro board
-  - `▶VIN` on the breakout <--> `5V` on the Metro board
+  - `GND` on the breakout <--> `-` power rail of the breadboard
+  - `▶VIN` on the breakout <--> `+` power rail of the breadboard
   - `▶RX` on the breakout <--> `RX` on the Metro board
   - `◀TX` on the breakout <--> `TX` on the Metro board
+- Use the breadboard and jumper wires to connect the PM2.5 sensor and Metro board:
+  - `VCC` on the sensor <--> `+` power rail of the breadboard
+  - `GND` on the sensor  <--> `-` power rail of the breadboard
+  - `TX` on the sensor <--> `25` on the Metro board
 - Plug the microSD card into the Metro board.
 - Attach the SMA to uFL Adapter Cable to the GPS breakout. **IMPORTANT:** Once you attach the adapter, it's suggested that you use strain relief to avoid ripping off the delicate connector.
 - Connect the external GPS antenna to the other end of the adapter cable. 
@@ -76,6 +83,7 @@ _(These are items that are either going to be phased out as the project matures,
   - adafruit_register (this one is also a folder)
   - adafruit_sdcard.mpy
   - adafruit_sht4x.mpy (for the temperature and humidity sensor)
+  - adafruit_pm25 (this one is also a folder)
 - Copy the `code.py` file from this repository to the home directory of the Metro board.
 
 #### Running things
@@ -94,5 +102,7 @@ Right now, this is just bare bones! If the device is powered on and can get a GP
 - [Adafruit GPS library](https://docs.circuitpython.org/projects/gps/en/latest/index.html) API technical documentation
 - [Adafruit PCT2075 Temperature Sensor](https://learn.adafruit.com/adafruit-pct2075-temperature-sensor/) by Abigail Torres
 - [PCT2075 Digital Temperature Sensor library](https://docs.circuitpython.org/projects/pct2075/) API technical documentation
+- [Adafruit Sensirion SHT40, SHT41 & SHT45 Temperature & Humidity Sensors](https://learn.adafruit.com/adafruit-sht40-temperature-humidity-sensor) By Kattni Rembor 
+- [PM2.5 Air Quality Sensor](https://learn.adafruit.com/pm25-air-quality-sensor) by lady ada
 
 

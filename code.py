@@ -12,6 +12,7 @@ import storage
 import adafruit_sdcard
 import adafruit_gps
 import adafruit_sht4x
+from adafruit_pm25.uart import PM25_UART
 
 ## Set variables
 
@@ -53,6 +54,11 @@ gps.send_command(b"PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
 # Set update rate to once a second (1hz) which is what you typically want.
 gps.send_command(b"PMTK220,1000")
 
+## Setup up the PM2.5 sensor
+uart2 = busio.UART(None, board.D25, baudrate=9600)
+reset_pin = None
+pm25 = PM25_UART(uart2, reset_pin)
+
 ## Main loop that runs for-ev-er
 last_print = time.monotonic()
 while True:
@@ -81,9 +87,14 @@ while True:
         )
         thisspot = "{:.6f},{:.6f}".format(gps.latitude, gps.longitude)
         thistemp = "{:.2f}".format(sht.temperature)
-        thishumi = "{:.2f}".format(sht.relative_humidity) 
+        thishumi = "{:.2f}".format(sht.relative_humidity)
+        try:
+            aqdata = pm25.read()
+            pm2 = int(aqdata["pm25 standard"])
+        except RuntimeError:
+            pm2 = "err"
         # Combine our measurements into one line.
-        line = "{},{},{}\r\n".format(thistime, thisspot, thistemp, thishumi)
+        line = "{},{},{},{},{}\r\n".format(thistime, thisspot, thistemp, thishumi, pm2)
         # Save the line to the log file.
         with open(LOG_FILE, LOG_MODE) as f:
             print(line)
