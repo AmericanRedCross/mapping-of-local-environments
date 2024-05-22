@@ -69,7 +69,8 @@ _(These are items that are either going to be phased out as the project matures,
 - Attach the SMA to uFL Adapter Cable to the GPS breakout. **IMPORTANT:** Once you attach the adapter, it's suggested that you use strain relief to avoid ripping off the delicate connector.
 - Connect the external GPS antenna to the other end of the adapter cable. 
 
-![Picture of the various components connected together.](img/v2023.1.jpg)
+![Picture of the various components connected together.](img/v02.jpg)
+_(Please ignore the LED shown wired into the breadboard, it is part of testing for an indicator light that is not yet included in the instructions.)_
 
 #### Loading the code
 
