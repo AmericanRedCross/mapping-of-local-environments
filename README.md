@@ -6,7 +6,7 @@ More than 50% of people live in cities; the [World Bank](https://www.worldbank.o
 
 We want our cities to be green, resilient, and inclusive. Achieving that goal requires intensive policy coordination and investment choices. We can empower communities to play an active role in their future by equipping them with data tools to understand their environment, inform their work, and enhance their advocacy efforts.
 
-This project is initially focused on a mobile unit that logs the time, GPS location, temperature, and humidity.
+This project is initially focused on a [mobile logger](mobile-logger/) that records the time, GPS location, temperature, and humidity.
 
 ## Contributing
 
