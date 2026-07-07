@@ -1,9 +1,9 @@
 # Mobile logger for community science urban heat island mapping
 
-We aim to have multiple versions based on different hardware. Currently we've experimented with...
-[1] Adafruit Feather RP2040 Adalogger
-[2] Raspberry Pi Zero 
-[3] Adafruit Metro RP2040
+We aim to have multiple versions based on different boards. Currently we've experimented with...
+- [[1] Adafruit Feather RP2040 Adalogger](https://github.com/AmericanRedCross/mapping-of-local-environments/tree/main/mobile-logger#1-adafruit-feather-rp2040-adalogger) - this one is the nearest to being complete
+- [[2] Raspberry Pi Zero](https://github.com/AmericanRedCross/mapping-of-local-environments/tree/main/mobile-logger#2-raspberry-pi-zero)
+- [[3] Adafruit Metro RP2040](https://github.com/AmericanRedCross/mapping-of-local-environments/tree/main/mobile-logger#3-adafruit-metro-rp2040)
 
 ## [1] Adafruit Feather RP2040 Adalogger
 
