@@ -16,7 +16,7 @@ We aim to have multiple versions based on different boards. Currently we've expe
 | Adafruit Feather RP2040 Adalogger | $14.95 [from Adafruit](https://www.adafruit.com/product/5980) |
 | Adafruit 128x64 OLED FeatherWing - Pre-Soldered | $15.95 [from Adafruit](https://www.adafruit.com/product/6313) |
 | Adafruit Ultimate GPS Breakout with GLONASS + GPS | $29.95 [from Adafruit](https://www.adafruit.com/product/5440) |
-| Adafruit Sensirion SHT45 Temperature & Humidity Sensor - STEMMA QT / Qwiic (without PTFE) | $12.50 [from Adafruit](https://www.adafruit.com/product/5665) |
+| Adafruit Sensirion SHT45 Temperature & Humidity Sensor - STEMMA QT / Qwiic (with PTFE filter) | $13.50 [from Adafruit](https://www.adafruit.com/product/5665) |
 | STEMMA QT / Qwiic JST SH 4-Pin Cable - 400mm | $1.25 [from Adafruit](https://www.adafruit.com/product/5385) |
 | Stacking Headers for Feather - 12-pin and 16-pin female headers | $1.25 [from Adafruit](https://www.adafruit.com/product/2830) |
 | MicroSD Memory Card - 8GB | $23.50 [from Adafruit](https://www.adafruit.com/product/1294) |
@@ -26,9 +26,10 @@ We aim to have multiple versions based on different boards. Currently we've expe
 
 **Options:**
 - To save $1 you can buy the OLED Featherwing with soldering required and solder the headers yourself.
-- To save $7 you can replace the SHT45 Sensor with the [SHT41](https://www.adafruit.com/product/5776). The same code will work for both.
+- To save $8 you can replace the SHT45 Sensor with the SHT41 ([$5.95 from Adafruit](https://www.adafruit.com/product/5776)). The same code will work for both.
     - The SHT41 has an ±1.8% typical relative humidity accuracy from 25 to 75% and ±0.2 °C typical accuracy from 0 to 75 °C.
     - The SHT45 has an ±1.0% typical relative humidity accuracy from 25 to 75% and ±0.1°C typical accuracy from 0 to 75 °C.
+    - **NOTE:** The SHT45 has the optional PTFE filter membrane that provides an additional barrier for all pollutants to enter the sensor opening, thus lowering negative influences on the sensing element. The membrane has a thickness of 100 µm offering a filtration efficiency of >99.99% for particles of 200 nm size and larger. Owing to the high permeability and the small volume between sensing element and membrane, the specified response time of the RH sensor is unaltered.  
 - The 300mm STEMMA QT cable can also work. [⚠️TODO: confirm this]
 
 **Tools:**
@@ -47,13 +48,12 @@ We aim to have multiple versions based on different boards. Currently we've expe
     - **Note:** One of the steps requires pressing the 2 buttons on the board which will be covered by the OLED Feathrwing. That's why we are doing this now and not wiring everything up first.
 - Download the CircuitPython [library bundle](https://circuitpython.org/libraries) for your CircuitPython version. Match the version with the version of CircuitPython you installed. We installed `10.2.1` so looked for "Bundle for Version 10.x".
 - Unzip the library download, and from the `/lib/` folders copy the following files into the `/lib/` folder on your Metro board's drive:
-  - adafruit_bus_device (this one is a folder)
+  - adafruit_bus_device (this is a folder)
+  - adafruit_display_text (this is a folder)
+  - adafruit_displayio_sh1107.mpy
   - adafruit_gps.mpy
-  - adafruit_register (this one is also a folder)
   - adafruit_sdcard.mpy
-  - adafruit_sht4x.mpy (for the temperature and humidity sensor)
-  - adafruit_pm25 (this one is also a folder)
-  - adafruit_epd (this one is also a folder)
+  - adafruit_sht4x.mpy
 - Copy the `code-Adafruit_Feather_RP2040_Adalogger.py` file from this repository to the home directory of the Metro board and rename it to just `code.py`.
 - Unplug the board from your computer.
 - Insert the SD card into the slot on the end of the Adalogger board.
