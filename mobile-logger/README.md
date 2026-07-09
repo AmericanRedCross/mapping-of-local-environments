@@ -73,6 +73,10 @@ _(This picture shows the components connected using a prototyping breadboard and
 
 If the device is powered on and can get a GPS fix it will start logging a line every 1 second with the timestamp, geographic coordinates, and temperature. It will show the status on the screen. If you're connected to your computer and have the Mu edtior open you can also view the lines it's logging via the serial console. **NOTE:** You'll need to remove the SD card from the Metro board and plug it into your computer to access the log file.
 
+![Before a GPS location fix.](img/RP2040_Adalogger-waiting.jpg)
+![With a GPS location fix and recording data.](img/RP2040_Adalogger-recording.jpg)
+_(Before a GPS location fix, and then with a GPS location fix and recording data.)_
+
 ![Screengrab of a text file showing the logged time, location, and temperature data.](img/logfile.png)
 
 #### Additional reading and resources
