@@ -5,7 +5,7 @@
 ## import library dependencies
 import adafruit_displayio_sh1107 # for display
 import adafruit_gps # for gps
-import adafruit_sdcard  # for sdcard
+import sdcardio # (a core module) for sdcard
 import adafruit_sht4x # for sht45
 import board # for display, gps, sdcard, sht45
 import busio # for gps, sdcard
@@ -20,10 +20,9 @@ from i2cdisplaybus import I2CDisplayBus # for display
 
 ## Setup the SD card
 # Connect to the card and mount the filesystem.
-cs = digitalio.DigitalInOut(board.SD_CS)
 sd_spi = busio.SPI(board.SD_CLK, board.SD_MOSI, board.SD_MISO)
-sdcard = adafruit_sdcard.SDCard(sd_spi, cs)
-vfs = storage.VfsFat(sdcard)
+sd = sdcardio.SDCard(sd_spi, board.SD_CS)
+vfs = storage.VfsFat(sd)
 storage.mount(vfs, "/sd")
 
 # Use the filesystem as normal! Our files are under /sd
