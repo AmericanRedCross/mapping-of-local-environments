@@ -97,19 +97,39 @@ gps.send_command(b"PMTK220,1000")
 
 
 ## Main code loop that runs for-ev-er
-last_print = time.monotonic()
+# Display display sleep/wake cycle settings
+ON_DURATION = 3
+OFF_DURATION = 9
+display_on = True
+last_toggle = time.monotonic()
+# Time counter for logging
+last_log = time.monotonic()
+# Let's go!
 while True:
     # Make sure to call gps.update() every loop iteration and at least twice
     # as fast as data comes from the GPS unit (usually every second).
     # This returns a bool that's true if it parsed new data (you can ignore it
     # though if you don't care and instead look at the has_fix property).
     gps.update()
-    # Every second print out current location details if there's a fix.
     current = time.monotonic()
-    if current - last_print >= 1.0:
-        last_print = current
+    # Run our processes every second.
+    if current - last_log >= 1.0: 
+        last_log = current   
+        # Handle display sleep/wake cycle.
+        if display_on:
+            if current - last_toggle >= ON_DURATION:
+                display.sleep()
+                display_on = False
+                last_toggle = current
+        else:
+            if current - last_toggle >= OFF_DURATION:
+                display.wake()
+                display_on = True
+                last_toggle = current
+                continue
+        # Check for a location fix.
         if not gps.has_fix:
-            # Try again if we don't have a fix yet.
+            # If we don't have a fix yet, let the user know and try again.
             print("Waiting for fix...")
             LINEWAITING = "{} C, {} RH".format("{:.2f}".format(sht.temperature), "{:.2f}".format(sht.relative_humidity))
             text_area1.text = "Waiting for fix..."
@@ -117,7 +137,7 @@ while True:
             text_area3.text = LINEWAITING
             text_area4.text = "Sleeves up."
             continue
-        # We have a fix! (gps.has_fix is true)
+        # We have a fix (gps.has_fix is true)!
         # Create a variable for each thing we want to record.
         THISTIME = "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z".format( # Formatting in ISO 8601.
             gps.timestamp_utc.tm_year,  # Grab parts of the time from the
@@ -130,16 +150,14 @@ while True:
         THISSPOT = "{:.6f},{:.6f}".format(gps.latitude, gps.longitude)
         THISTEMP = "{:.2f}".format(sht.temperature)
         THISHUMI = "{:.2f}".format(sht.relative_humidity)
-
         # Combine our measurements into one line.
         LINELOG = "{},{},{},{}\r\n".format(THISTIME, THISSPOT, THISTEMP, THISHUMI)
-        
+        # Update the display with the current data.
         text_area1.text = "Recording!"
         text_area2.text = "{:.6f},".format(gps.latitude)
         text_area3.text = "{:.6f}".format(gps.longitude)
         text_area4.text = "{} C, {} RH".format(THISTEMP, THISHUMI)
-        
-        # open file and append a new data record
+        # Open file and append a new data record.
         with open(LOG_FILE, LOG_MODE) as f:
             print(LINELOG)
             f.write(LINELOG.encode('utf-8'))
