@@ -18,6 +18,12 @@ import time # for code, gps
 import os #for display, sdcard
 from adafruit_display_text import label # for display
 from i2cdisplaybus import I2CDisplayBus # for display
+from microcontroller import watchdog as w # for restarting the system on a crash
+from watchdog import WatchDogMode # for restarting the system on a crash
+
+# configure watchdog
+w.timeout = 6
+w.mode = WatchDogMode.RESET
 
 ## Setup the SD card
 # Connect to the card and mount the filesystem.
@@ -107,6 +113,8 @@ last_toggle = time.monotonic()
 last_log = time.monotonic()
 # Let's go!
 while True:
+    # feed the watchdog to prevent it expiring and resetting the system
+    w.feed() 
     try:
         # Make sure to call gps.update() every loop iteration and at least twice
         # as fast as data comes from the GPS unit (usually every second).
