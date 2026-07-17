@@ -11,6 +11,7 @@ import board # for display, gps, sdcard, sht45
 import busio # for gps, sdcard
 import digitalio # for display, sdcard
 import displayio # for display
+import gc # for memory maintenance
 import storage  # for sdcard
 import terminalio # for display
 import time # for code, gps
@@ -106,58 +107,65 @@ last_toggle = time.monotonic()
 last_log = time.monotonic()
 # Let's go!
 while True:
-    # Make sure to call gps.update() every loop iteration and at least twice
-    # as fast as data comes from the GPS unit (usually every second).
-    # This returns a bool that's true if it parsed new data (you can ignore it
-    # though if you don't care and instead look at the has_fix property).
-    gps.update()
-    current = time.monotonic()
-    # Run our processes every second.
-    if current - last_log >= 1.0: 
-        last_log = current   
-        # Handle display sleep/wake cycle.
-        if display_on:
-            if current - last_toggle >= ON_DURATION:
-                display.sleep()
-                display_on = False
-                last_toggle = current
-        else:
-            if current - last_toggle >= OFF_DURATION:
-                display.wake()
-                display_on = True
-                last_toggle = current
+    try:
+        # Make sure to call gps.update() every loop iteration and at least twice
+        # as fast as data comes from the GPS unit (usually every second).
+        # This returns a bool that's true if it parsed new data (you can ignore it
+        # though if you don't care and instead look at the has_fix property).
+        gps.update()
+        current = time.monotonic()
+        # Run our processes every second.
+        if current - last_log >= 1.0: 
+            last_log = current   
+            # Handle display sleep/wake cycle.
+            if display_on:
+                if current - last_toggle >= ON_DURATION:
+                    display.sleep()
+                    display_on = False
+                    last_toggle = current
+            else:
+                if current - last_toggle >= OFF_DURATION:
+                    display.wake()
+                    display_on = True
+                    last_toggle = current
+            # Check for a location fix.
+            if not gps.has_fix:
+                # If we don't have a fix yet, let the user know and try again.
+                print("Waiting for fix...")
+                LINEWAITING = "{} C, {} RH".format("{:.2f}".format(sht.temperature), "{:.2f}".format(sht.relative_humidity))
+                text_area1.text = "Waiting for fix..."
+                text_area2.text = "Clear view of sky?"
+                text_area3.text = LINEWAITING
+                text_area4.text = "Sleeves up."
                 continue
-        # Check for a location fix.
-        if not gps.has_fix:
-            # If we don't have a fix yet, let the user know and try again.
-            print("Waiting for fix...")
-            LINEWAITING = "{} C, {} RH".format("{:.2f}".format(sht.temperature), "{:.2f}".format(sht.relative_humidity))
-            text_area1.text = "Waiting for fix..."
-            text_area2.text = "Clear view of sky?"
-            text_area3.text = LINEWAITING
-            text_area4.text = "Sleeves up."
-            continue
-        # We have a fix (gps.has_fix is true)!
-        # Create a variable for each thing we want to record.
-        THISTIME = "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z".format( # Formatting in ISO 8601.
-            gps.timestamp_utc.tm_year,  # Grab parts of the time from the
-            gps.timestamp_utc.tm_mon,  # struct_time object that holds
-            gps.timestamp_utc.tm_mday,  # the fix time.  Note you might
-            gps.timestamp_utc.tm_hour,  # not get all data like year, day, month!
-            gps.timestamp_utc.tm_min, 
-            gps.timestamp_utc.tm_sec
-        )
-        THISSPOT = "{:.6f},{:.6f}".format(gps.latitude, gps.longitude)
-        THISTEMP = "{:.2f}".format(sht.temperature)
-        THISHUMI = "{:.2f}".format(sht.relative_humidity)
-        # Combine our measurements into one line.
-        LINELOG = "{},{},{},{}\r\n".format(THISTIME, THISSPOT, THISTEMP, THISHUMI)
-        # Update the display with the current data.
-        text_area1.text = "Recording!"
-        text_area2.text = "{:.6f},".format(gps.latitude)
-        text_area3.text = "{:.6f}".format(gps.longitude)
-        text_area4.text = "{} C, {} RH".format(THISTEMP, THISHUMI)
-        # Open file and append a new data record.
-        with open(LOG_FILE, LOG_MODE) as f:
-            print(LINELOG)
-            f.write(LINELOG.encode('utf-8'))
+            # We have a fix (gps.has_fix is true)!
+            # Create a variable for each thing we want to record.
+            THISTIME = "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z".format( # Formatting in ISO 8601.
+                gps.timestamp_utc.tm_year,  # Grab parts of the time from the
+                gps.timestamp_utc.tm_mon,  # struct_time object that holds
+                gps.timestamp_utc.tm_mday,  # the fix time.  Note you might
+                gps.timestamp_utc.tm_hour,  # not get all data like year, day, month!
+                gps.timestamp_utc.tm_min, 
+                gps.timestamp_utc.tm_sec
+            )
+            THISSPOT = "{:.6f},{:.6f}".format(gps.latitude, gps.longitude)
+            THISTEMP = "{:.2f}".format(sht.temperature)
+            THISHUMI = "{:.2f}".format(sht.relative_humidity)
+            # Combine our measurements into one line.
+            LINELOG = "{},{},{},{}\r\n".format(THISTIME, THISSPOT, THISTEMP, THISHUMI)
+            # Update the display with the current data.
+            text_area1.text = "Recording!"
+            text_area2.text = "{:.6f},".format(gps.latitude)
+            text_area3.text = "{:.6f}".format(gps.longitude)
+            text_area4.text = "{} C, {} RH".format(THISTEMP, THISHUMI)
+            # Open file and append a new data record.
+            with open(LOG_FILE, LOG_MODE) as f:
+                print(LINELOG)
+                f.write(LINELOG.encode('utf-8'))
+            gc.collect() # free up the memory space from unused memory objects
+    except Exception as e:
+        print("Loop error: ", e)
+        with open("/sd/error.txt", "ab") as f:
+            f.write(e.encode('utf-8'))
+        gc.collect() # free up the memory space from unused memory objects
+        time.sleep(1)    
