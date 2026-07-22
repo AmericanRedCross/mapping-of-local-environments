@@ -11,73 +11,91 @@ We aim to have multiple versions based on different boards. Currently we've expe
 
 ### Component list
 
+## Core items
 | Item  | Link |
 | ------------- | ------------- |
 | Adafruit Feather RP2040 Adalogger | $14.95 [from Adafruit](https://www.adafruit.com/product/5980) |
-| Adafruit 128x64 OLED FeatherWing - Pre-Soldered | $15.95 [from Adafruit](https://www.adafruit.com/product/6313) |
-| Adafruit Ultimate GPS Breakout with GLONASS + GPS | $29.95 [from Adafruit](https://www.adafruit.com/product/5440) |
+| Adafruit Mini GPS PA1010D - UART and I2C - STEMMA QT | $29.95 [from Adafruit](https://www.adafruit.com/product/4415) |
 | Adafruit Sensirion SHT45 Temperature & Humidity Sensor - STEMMA QT / Qwiic (with PTFE filter) | $13.50 [from Adafruit](https://www.adafruit.com/product/5665) |
-| STEMMA QT / Qwiic JST SH 4-Pin Cable - 400mm | $1.25 [from Adafruit](https://www.adafruit.com/product/5385) |
-| Stacking Headers for Feather - 12-pin and 16-pin female headers | $1.25 [from Adafruit](https://www.adafruit.com/product/2830) |
+| QT to QT Cable - 400mm | $1.50 [from Adafruit](https://www.adafruit.com/product/5385) |
+| QT to QT Cable - 200mm | $1.25 [from Adafruit](https://www.adafruit.com/product/4401) |
 | MicroSD Memory Card - 8GB | $23.50 [from Adafruit](https://www.adafruit.com/product/1294) |
 | USB C to USB C Cable - 1m | $9.95 [from Adafruit](https://www.adafruit.com/product/4199) |
 | Power bank w/ USB-C port [⚠️TODO: recommend capacity] | [⚠️TODO: example source] |
 
+## Additional items for NeoPixel version
+| Item  | Link |
+| ------------- | ------------- |
+| Breadboard-friendly RGB Smart NeoPixel - Pack of 5 | $7.95 [from Adafruit](https://www.adafruit.com/product/1312) |
+| Solid-Core Wire - 22AWG | $2.95 for 25ft [from Adafruit](https://www.adafruit.com/product/290) |
 
-**Options:**
-- To save $1 you can buy the OLED Featherwing with soldering required and solder the headers yourself.
+## Additional items for OLED display version
+| Item  | Link |
+| ------------- | ------------- |
+| Adafruit 128x64 OLED FeatherWing - Pre-Soldered | $15.95 [from Adafruit](https://www.adafruit.com/product/6313) |
+| Stacking Headers for Feather - 12-pin and 16-pin female headers | $1.25 [from Adafruit](https://www.adafruit.com/product/2830) |
+
+
+**General notes:**  
+- If buying from Adafruit they offer discounts when buying quantities greater than 10.
 - To save $8 you can replace the SHT45 Sensor with the SHT41 ([$5.95 from Adafruit](https://www.adafruit.com/product/5776)). The same code will work for both.
     - The SHT41 has an ±1.8% typical relative humidity accuracy from 25 to 75% and ±0.2 °C typical accuracy from 0 to 75 °C.
-    - The SHT45 has an ±1.0% typical relative humidity accuracy from 25 to 75% and ±0.1°C typical accuracy from 0 to 75 °C.
-    - **NOTE:** The SHT45 has the optional PTFE filter membrane that provides an additional barrier for all pollutants to enter the sensor opening, thus lowering negative influences on the sensing element. The membrane has a thickness of 100 µm offering a filtration efficiency of >99.99% for particles of 200 nm size and larger. Owing to the high permeability and the small volume between sensing element and membrane, the specified response time of the RH sensor is unaltered.  
-- The 300mm STEMMA QT cable can also work. [⚠️TODO: confirm this]
+    - The SHT45 has an ±1.0% typical relative humidity accuracy from 25 to 75% and ±0.1°C typical accuracy from 0 to 75 °C. Also, the SHT45 has the optional PTFE filter membrane that provides an additional barrier for all pollutants to enter the sensor opening, thus lowering negative influences on the sensing element. The membrane has a thickness of 100 µm offering a filtration efficiency of >99.99% for particles of 200 nm size and larger. Owing to the high permeability and the small volume between sensing element and membrane, the specified response time of the RH sensor is unaltered. 
+
+**NeoPixel version notes:**
+    - For the Neopixel version you can buy 3 colors of wire - red, black, white for power, ground, and data - but it is not required.
+    - ⚠️TODO: Estimate how much wire each unit uses.
+
+**OLED display version notes:**  
+- To save $1 you can buy the OLED Featherwing with soldering required and solder the headers yourself.
 
 **Tools:**
-- Solder wire - such as: Standard 60/40 lead/tin Rosin Core Solder which is easy to work with - $7.95 [from Adafruit](https://www.adafruit.com/product/1886)
-    - **IMPORTANT:** [Lead is a toxic metal](https://www.who.int/news-room/fact-sheets/detail/lead-poisoning-and-health) that can cause serious health problems. Work in a well ventilated area, avoid ingesting, keep away from children, and take proper precautions when working with materials containing lead. There is also [lead free solder](https://www.adafruit.com/product/1930) available.
-- Soldering iron ([this guide](https://learn.adafruit.com/adafruit-guide-excellent-soldering) has notes on choosing an iron)
-- Safety glasses
+- Solder wire - such as: Standard 60/40 lead/tin Rosin Core Solder which is easy to work with - $7.95 [from Adafruit](https://www.adafruit.com/product/1886).
+    - **🚨 WARNING:** [Lead is a toxic metal](https://www.who.int/news-room/fact-sheets/detail/lead-poisoning-and-health) that can cause serious health problems. Work in a well ventilated area, avoid ingesting, keep away from children, and take proper precautions when working with materials containing lead. There is also [lead free solder](https://www.adafruit.com/product/1930) available.
+- Soldering iron ([this guide](https://learn.adafruit.com/adafruit-guide-excellent-soldering) has notes on choosing an iron).
+- Safety glasses.
 
 ### Setup
 
-- Solder the Stacking Headers onto the Adalogger board. If you're new to soldering, consider looking through the [Adafruit Guide To Excellent Soldering](https://learn.adafruit.com/adafruit-guide-excellent-soldering) by Bill Earl.
+- If using the OLED display, solder the Stacking Headers onto the Adalogger board. If you're new to soldering, consider looking through the [Adafruit Guide To Excellent Soldering](https://learn.adafruit.com/adafruit-guide-excellent-soldering) by Bill Earl.
 - [Install the Mu editor](https://learn.adafruit.com/welcome-to-circuitpython/installing-mu-editor) on your computer. 
 - [Install CircuitPython](https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/install-circuitpython) on the Adalogger board. 
     - When downloading the latest stable version of [CircuitPython for the Adalogger](https://circuitpython.org/board/adafruit_feather_rp2040_adalogger/) note the version number. It is `10.2.1` at the time of writing this.
     - https://circuitpython.org/board/adafruit_feather_rp2040_adalogger/
-    - **Note:** One of the steps requires pressing the 2 buttons on the board which will be covered by the OLED Feathrwing. That's why we are doing this now and not wiring everything up first.
+    - **Note:** One of the steps requires pressing the 2 buttons on the board which will be covered by the OLED Featherwing. That's why we are doing this now and not wiring everything up first.
+- Make sure the `CIRCUITPY` drive that shows up on your computer contains a `/lib/` folder and `/sd/` folder.
 - Download the CircuitPython [library bundle](https://circuitpython.org/libraries) for your CircuitPython version. Match the version with the version of CircuitPython you installed. We installed `10.2.1` so looked for "Bundle for Version 10.x".
 - Unzip the library download, and from the `/lib/` folders copy the following files into the `/lib/` folder on your Metro board's drive:
-  - adafruit_bus_device (this is a folder)
-  - adafruit_display_text (this is a folder)
-  - adafruit_displayio_sh1107.mpy
-  - adafruit_gps.mpy
-  - adafruit_sdcard.mpy
-  - adafruit_sht4x.mpy
-- Copy the `code-Adafruit_Feather_RP2040_Adalogger.py` file from this repository to the home directory of the Metro board and rename it to just `code.py`.
+    - For both versions:
+        - adafruit_gps.mpy
+        - adafruit_sht4x.mpy
+    - For NeoPixel version:
+        - neopixel.mpy
+    - For OLED display version:
+        - adafruit_bus_device (this is a folder)
+        - adafruit_display_text (this is a folder)
+        - adafruit_displayio_sh1107.mpy
+        - ⚠️TODO: check these dependencies
+- Copy the either `code-Adafruit_Feather_RP2040_Adalogger_NeoPixel.py` or `code-Adafruit_Feather_RP2040_Adalogger_OLED.py` file (depending on which version you are building) from this repository to the home directory of the Metro board and rename it to just `code.py`.
 - Unplug the board from your computer.
 - Insert the SD card into the slot on the end of the Adalogger board.
-- Stack the OLED FeatherWing on top of the Adalogger board by carefully lining up the pins with the ports and pushing them together gently and evenly.
-- Connect the SHT41/45 Sensor to the OLED FeatherWing using the STEMMA QT cable. The port on the FeatheWing is next to the buttons (and there's only one). With the sensor oriented so that you can read the text printed on it, plug the cable into the left side port.
-- The GPS Breakout needs the headers cut to length and soldered on. 
-- Connect [⚠️TODO: decide how to do this without a prototyping breadboard] the GPS Breakout and Adalogger board:
-  - `▶VIN` on the breakout <--> `3.3V` on the Adalogger board
-  - `GND` on the breakout <--> `GND` on the Adalogger board
-  - `▶RX` on the breakout <--> `TX` on the Adalogger board
-  - `◀TX` on the breakout <--> `RX` on the Adalogger board
+- If using the OLED display, stack the OLED FeatherWing on top of the Adalogger board by carefully lining up the pins with the ports and pushing them together gently and evenly.
+- Connect the Mini GPS to either the I2C port on the Adalogger board - or if using the OLED display, the I2C port on the end of the OLED FeatherWing (the port on the FeatherWing is next to the buttons, and there's only one) - using the 200mm QT cable. Plug the cable into the left side of the Mini GPS when the GPS is oriented so that you can read the text printed on it.
+- Connect the SHT41/45 Sensor to the Mini GPS using the 400mm QT cable. The cable should start at the right side of the Mini GPS and plug into the left side of the sensor when the sensor is oriented so that you can read the text printed on it.
 
-![Picture of the various components connected together.](img/RP2040_Adalogger-v0.jpg)
-_(This picture shows the components connected using a prototyping breadboard and not the final configuration.)_
+![Picture of the various components connected together for the OLED version.](img/RP2040_Adalogger-v0.jpg)  
+_(This picture shows the components connected using a different GPS module and a prototyping breadboard. It is not the final configuration.)_
 
 #### Running things
 
-If the device is powered on and can get a GPS fix it will start logging a line every 1 second with the timestamp, geographic coordinates, and temperature. It will show the status on the screen. If you're connected to your computer and have the Mu edtior open you can also view the lines it's logging via the serial console. **NOTE:** You'll need to remove the SD card from the Metro board and plug it into your computer to access the log file.
+If the device is powered on and can get a GPS fix it will start logging a line every 1 second with the timestamp, geographic coordinates, and temperature. It will show the status on the screen. If you're connected to your computer and have the Mu edtior open you can also view the lines it's logging via the serial console. **NOTE:** You'll need to remove the SD card from the board and plug it into your computer to access the log file.
 
 ![Before a GPS location fix.](img/RP2040_Adalogger-waiting.jpg)
 ![With a GPS location fix and recording data.](img/RP2040_Adalogger-recording.jpg)  
 _(Before a GPS location fix, and then with a GPS location fix and recording data.)_
 
-![Screengrab of a text file showing the logged time, location, and temperature data.](img/logfile.png)
+![Screengrab of a text file showing the logged time, location, and temperature data.](img/logfile.png)  
+_(An example of the type of data file output.)_
 
 #### Additional reading and resources
 
@@ -165,7 +183,7 @@ _(These are items that are either going to be phased out as the project matures,
 - Attach the SMA to uFL Adapter Cable to the GPS breakout. **IMPORTANT:** Once you attach the adapter, it's suggested that you use strain relief to avoid ripping off the delicate connector.
 - Connect the external GPS antenna to the other end of the adapter cable. 
 
-![Picture of the various components connected together.](img/Metro_RP2040-v02.jpg)
+![Picture of the various components connected together.](img/Metro_RP2040-v02.jpg)  
 _(Please ignore the LED shown wired into the breadboard, it is part of testing for an indicator light that is not yet included in the instructions.)_
 
 #### Loading the code
