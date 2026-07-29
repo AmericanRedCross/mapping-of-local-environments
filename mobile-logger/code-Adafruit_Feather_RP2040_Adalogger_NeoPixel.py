@@ -33,7 +33,7 @@ COLOR_2 = [252,141,89]
 COLOR_3 = [227,74,51]
 COLOR_4 = [179,0,0]
 # Configure the NeoPixel.
-pixels = neopixel.NeoPixel(board.D9, 1, brightness=0.2, auto_write=False)
+pixels = neopixel.NeoPixel(board.D9, 1, brightness=0.1, auto_write=False)
 pixels.fill(COLOR_NONE)
 pixels.show()
 # Set our variables for blink rate.
