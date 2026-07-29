@@ -25,35 +25,37 @@ w.mode = WatchDogMode.RESET
 
 ## Setup the board's NeoPixel
 # Define our colors.
-COLOR_RED = [215,25,28]
-COLOR_ORANGE = [253,174,97]
-COLOR_YELLOW = [255,255,191]
-COLOR_BLUE_LGT = [171,217,233]
-COLOR_BLUE_DRK = [44,123,182]
-COLOR_PURPLE = [94,60,153]
 COLOR_NONE = [0,0,0]
-# Configure the NeoPixels
-pixels = neopixel.NeoPixel(board.D9, 2, brightness=0.2, auto_write=False)
+COLOR_WAIT = [84,39,143]
+COLOR_0 = [254,240,217]
+COLOR_1 = [253,204,138]
+COLOR_2 = [252,141,89]
+COLOR_3 = [227,74,51]
+COLOR_4 = [179,0,0]
+# Configure the NeoPixel.
+pixels = neopixel.NeoPixel(board.D9, 1, brightness=0.2, auto_write=False)
 pixels.fill(COLOR_NONE)
 pixels.show()
-# Set our variables for blink rate and colors.
+# Set our variables for blink rate.
+# When waiting for GPS fix, on/off of the NeoPixel is every second.
 PIXEL_GPS_WAIT_ON_DURATION = 1.0
 PIXEL_GPS_WAIT_OFF_DURATION = 1.0
-PIXEL_GPS_ON_DURATION = 2.0
-PIXEL_GPS_OFF_DURATION = 8.0
-PIXEL_TEMP_ON_DURATION = 2.0
-PIXEL_TEMP_OFF_DURATION = 4.0
+# When recording, the blink rate slows down.
+PIXEL_RECORDING_ON_DURATION = 2.0
+PIXEL_RECORDING_OFF_DURATION = 4.0
+# Set our color function.
+# When recording, the color changes based on the temperature measurement.
 def color_for_temp_c(temp_c):
-    if temp_c >= 35.0:
-        return COLOR_RED
+    if temp_c >= 40.0:
+        return COLOR_4
+    elif temp_c >= 35.0:
+        return COLOR_3    
     elif temp_c >= 30.0:
-        return COLOR_ORANGE    
+        return COLOR_2
     elif temp_c >= 25.0:
-        return COLOR_YELLOW
-    elif temp_c >= 20.0:
-        return COLOR_BLUE_LGT    
+        return COLOR_1    
     else:
-        return COLOR_BLUE_DRK  
+        return COLOR_0 
 
 
 ## Setup the SD card
@@ -87,12 +89,9 @@ gps.send_command(b"PMTK220,1000")
 ## Main code loop that runs for-ev-er
 # Create time counter for logging.
 last_log = time.monotonic()
-# Create time counter and tracker for the temperature indicator light.
-last_temp_toggle = time.monotonic()
-pixel_temp_on = False
-# Create time counter and tracker for the GPS indicator light.
-last_gps_toggle = time.monotonic()
-pixel_gps_on = False
+# Create time counter and tracker for the indicator light.
+last_pixel_toggle = time.monotonic()
+pixel_on = False
 # Let's go!
 while True:
     # Feed the watchdog to prevent it expiring and resetting the system.
@@ -112,19 +111,19 @@ while True:
                 # We don't have a fix yet.
                 # Log to serial console in Mu Editor.
                 print("Waiting for fix...")
-                # Update the NeoPixel showing GPS status.
-                if pixel_gps_on:
-                    if current - last_gps_toggle >= PIXEL_GPS_WAIT_ON_DURATION:
+                # Update the NeoPixel to blink waiting for fix status.
+                if pixel_on:
+                    if current - last_pixel_toggle >= PIXEL_GPS_WAIT_ON_DURATION:
                         pixels[0] = COLOR_NONE
                         pixels.show()
-                        pixel_gps_on = False
-                        last_gps_toggle = current
+                        pixel_on = False
+                        last_pixel_toggle = current
                 else:
-                    if current - last_gps_toggle >= PIXEL_GPS_WAIT_OFF_DURATION:
-                        pixels[0] = COLOR_BLUE_LGT
+                    if current - last_pixel_toggle >= PIXEL_GPS_WAIT_OFF_DURATION:
+                        pixels[0] = COLOR_WAIT
                         pixels.show()
-                        pixel_gps_on = True
-                        last_gps_toggle = current
+                        pixel_on = True
+                        last_pixel_toggle = current
                         # Free up the memory space from unused memory objects.
                         gc.collect() 
                 # Go back to the top of the while loop.
@@ -132,32 +131,19 @@ while True:
             # We have a fix (gps.has_fix is true)!
             # Get SHT data with one sensor read action.
             CURRENTTEMP, CURRENTHUMI = sht.measurements
-            # Update the NeoPixel showing temperature.
-            if pixel_temp_on:
-                if current - last_temp_toggle >= PIXEL_TEMP_ON_DURATION:
-                    pixels[1] = COLOR_NONE
-                    pixels.show()
-                    pixel_temp_on = False
-                    last_temp_toggle = current
-            else:
-                if current - last_temp_toggle >= PIXEL_TEMP_OFF_DURATION:
-                    pixels[1] = color_for_temp_c(CURRENTTEMP)
-                    pixels.show()
-                    pixel_temp_on = True
-                    last_temp_toggle = current
-            # Update the NeoPixel showing GPS status.
-            if pixel_gps_on:
-                if current - last_gps_toggle >= PIXEL_GPS_ON_DURATION:
+            # Update the NeoPixel to show recording status.
+            if pixel_on:
+                if current - last_pixel_toggle >= PIXEL_RECORDING_ON_DURATION:
                     pixels[0] = COLOR_NONE
                     pixels.show()
-                    pixel_gps_on = False
-                    last_gps_toggle = current
+                    pixel_on = False
+                    last_pixel_toggle = current
             else:
-                if current - last_gps_toggle >= PIXEL_GPS_OFF_DURATION:
-                    pixels[0] = COLOR_BLUE_DRK
+                if current - last_pixel_toggle >= PIXEL_RECORDING_OFF_DURATION:
+                    pixels[0] = color_for_temp_c(CURRENTTEMP)
                     pixels.show()
-                    pixel_gps_on = True
-                    last_gps_toggle = current     
+                    pixel_on = True
+                    last_pixel_toggle = current
             # Create a variable for each thing we want to record.
             THISTIME = "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z".format( # Formatting in ISO 8601.
                 gps.timestamp_utc.tm_year,  # Grab parts of the time from the
