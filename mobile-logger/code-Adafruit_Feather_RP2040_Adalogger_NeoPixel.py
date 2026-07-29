@@ -131,19 +131,6 @@ while True:
             # We have a fix (gps.has_fix is true)!
             # Get SHT data with one sensor read action.
             CURRENTTEMP, CURRENTHUMI = sht.measurements
-            # Update the NeoPixel to show recording status.
-            if pixel_on:
-                if current - last_pixel_toggle >= PIXEL_RECORDING_ON_DURATION:
-                    pixels[0] = COLOR_NONE
-                    pixels.show()
-                    pixel_on = False
-                    last_pixel_toggle = current
-            else:
-                if current - last_pixel_toggle >= PIXEL_RECORDING_OFF_DURATION:
-                    pixels[0] = color_for_temp_c(CURRENTTEMP)
-                    pixels.show()
-                    pixel_on = True
-                    last_pixel_toggle = current
             # Create a variable for each thing we want to record.
             THISTIME = "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z".format( # Formatting in ISO 8601.
                 gps.timestamp_utc.tm_year,  # Grab parts of the time from the
@@ -162,6 +149,19 @@ while True:
             with open(LOG_FILE, LOG_MODE) as f:
                 print(LINELOG)
                 f.write(LINELOG)
+            # Update the NeoPixel to show recording status.
+            if pixel_on:
+                if current - last_pixel_toggle >= PIXEL_RECORDING_ON_DURATION:
+                    pixels[0] = COLOR_NONE
+                    pixels.show()
+                    pixel_on = False
+                    last_pixel_toggle = current
+            else:
+                if current - last_pixel_toggle >= PIXEL_RECORDING_OFF_DURATION:
+                    pixels[0] = color_for_temp_c(CURRENTTEMP)
+                    pixels.show()
+                    pixel_on = True
+                    last_pixel_toggle = current                
             # Free up the memory space from unused memory objects.
             gc.collect() 
     # Catch errors that cause the loop to exit unexpectedly.
