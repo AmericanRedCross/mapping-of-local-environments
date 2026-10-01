@@ -109,8 +109,6 @@ while True:
             # Check for a location fix.
             if not gps.has_fix:
                 # We don't have a fix yet.
-                # Log to serial console in Mu Editor.
-                print("Waiting for fix...")
                 # Update the NeoPixel to blink waiting for fix status.
                 if pixel_on:
                     if current - last_pixel_toggle >= PIXEL_GPS_WAIT_ON_DURATION:
@@ -132,13 +130,17 @@ while True:
             # Get SHT data with one sensor read action.
             CURRENTTEMP, CURRENTHUMI = sht.measurements
             # Create a variable for each thing we want to record.
-            THISTIME = "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z".format( # Formatting in ISO 8601.
-                gps.timestamp_utc.tm_year,  # Grab parts of the time from the
-                gps.timestamp_utc.tm_mon,  # struct_time object that holds
-                gps.timestamp_utc.tm_mday,  # the fix time.  Note you might
-                gps.timestamp_utc.tm_hour,  # not get all data like year, day, month!
-                gps.timestamp_utc.tm_min, 
-                gps.timestamp_utc.tm_sec
+            # Cache the struct_time object that holds the fix time.
+            # Note you might not get all data like year, day, month!
+            ts = gps.timestamp_utc
+            # Format our time in ISO 8601.
+            THISTIME = "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z".format( 
+                ts.tm_year,
+                ts.tm_mon,
+                ts.tm_mday,
+                ts.tm_hour,
+                ts.tm_min,
+                ts.tm_sec
             )
             THISSPOT = "{:.6f},{:.6f}".format(gps.latitude, gps.longitude)
             THISTEMP = "{:.2f}".format(CURRENTTEMP)
