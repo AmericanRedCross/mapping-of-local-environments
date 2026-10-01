@@ -65,7 +65,7 @@ sd = sdcardio.SDCard(sd_spi, board.SD_CS)
 vfs = storage.VfsFat(sd)
 storage.mount(vfs, "/sd")
 # Configure logging variables.
-LOG_FILE = "/sd/log.csv" # Path to the file to log data.
+LOG_FILE = "/sd/log.csv" # Path to the file to log data. We'll update it later.
 LOG_MODE = "a" # Mode for opening the log file. 
 # (Mode 'a' means append or add new lines to the end
 # of the file rather than erasing it and starting over.)
@@ -92,6 +92,7 @@ last_log = time.monotonic()
 # Create time counter and tracker for the indicator light.
 last_pixel_toggle = time.monotonic()
 pixel_on = False
+new_session = True
 # Let's go!
 while True:
     # Feed the watchdog to prevent it expiring and resetting the system.
@@ -147,6 +148,17 @@ while True:
             THISHUMI = "{:.2f}".format(CURRENTHUMI)
             # Combine our measurements into one line.
             LINELOG = "{},{},{},{}\r\n".format(THISTIME, THISSPOT, THISTEMP, THISHUMI)
+            # If this is the first log of this session, set a new filename
+            if new_session:
+                LOG_FILE = "/sd/{}-{:02}-{:02}T{:02}{:02}{:02}Z.csv".format(
+                    ts.tm_year,
+                    ts.tm_mon,
+                    ts.tm_mday,
+                    ts.tm_hour,
+                    ts.tm_min,
+                    ts.tm_sec
+                )
+                new_session = False
             # Open file and append a new data record.
             with open(LOG_FILE, LOG_MODE) as f:
                 print(LINELOG)
