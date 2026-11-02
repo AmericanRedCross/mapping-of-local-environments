@@ -59,8 +59,8 @@
     - adafruit_gps.mpy
     - adafruit_sht4x.mpy
     - neopixel.mpy
-- To check your soldering, copy the `code-Adafruit_Feather_RP2040_Adalogger_NeoPixel_Test.py` file to the home directory of the board and rename it to just `code.py`. The NeoPixel should turn on/off every 2 seconds.
-- Delete the `code.py` file from the board. Copy the `code-Adafruit_Feather_RP2040_Adalogger_NeoPixel.py` file from this repository to the home directory of the Metro board and rename it to just `code.py`.
+- To check your soldering, copy the `code_Adalogger-NeoPixel-Test.py` file to the home directory of the board and rename it to just `code.py`. The NeoPixel should turn on/off every 2 seconds.
+- Delete the `code.py` file from the board. Copy the `code_Adalogger-NeoPixel.py` file from this repository to the home directory of the Metro board and rename it to just `code.py`.
 - Unplug the board from your computer.
 - Insert the SD card into the slot on the end of the Adalogger board.
 - Connect the SHT41/45 Sensor to the 200mm QT cable. The cable should plug into the left side of the sensor when the sensor is oriented so that you can read the text printed on it.
