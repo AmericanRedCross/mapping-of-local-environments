@@ -37,9 +37,9 @@ pixels = neopixel.NeoPixel(board.D9, 1, brightness=0.1, auto_write=False)
 pixels.fill(COLOR_NONE)
 pixels.show()
 # Set our variables for blink rate.
-# When waiting for GPS fix, on/off of the NeoPixel is every second.
-PIXEL_GPS_WAIT_ON_DURATION = 1.0
-PIXEL_GPS_WAIT_OFF_DURATION = 1.0
+# When waiting for GPS fix, on/off of the NeoPixel is fast.
+PIXEL_GPS_WAIT_ON_DURATION = 0.5
+PIXEL_GPS_WAIT_OFF_DURATION = 0.5
 # When recording, the blink rate slows down.
 PIXEL_RECORDING_ON_DURATION = 2.0
 PIXEL_RECORDING_OFF_DURATION = 4.0
