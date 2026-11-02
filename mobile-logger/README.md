@@ -74,7 +74,7 @@
 
 #### Running things
 
-If the device is powered on and can get a GPS fix it will start logging a line every 1 second with the timestamp, geographic coordinates, temperature and humidity. **NOTE:** You'll need to remove the SD card from the board and plug it into your computer to access the log file.
+If the device is powered on and can get a GPS fix it will start logging a line every 1 second with the timestamp, geographic coordinates, temperature and humidity. **NOTE:** You'll need to remove the SD card from the board and plug it into your computer to edit or delete the files. If you connect to your computer via the board's USB port, you can copy the files but will have read-only access.
 
 ![Screengrab of a text file showing the logged time, location, and temperature data.](img/logfile.png)  
 _(An example of the type of data file output.)_
